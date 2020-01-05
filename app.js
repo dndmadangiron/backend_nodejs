@@ -11,6 +11,6 @@ app.get('/', function(req, res) {
 });
 
 //서버 구축 테스트용
-app.listen(80, function() {
-    console.log('Server listening on Port 80 . . .');
+app.listen(3030, function() {
+    console.log('Server listening on Port 3000 . . .');
 });
