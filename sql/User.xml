@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+
+  <select id="check_user">
+    SELECT user_id FROM madangiron.USER_INFO
+    WHERE user_id = #{user_id}
+  </select>
+
+  <insert id="insert_user">
+    INSERT INTO madangiron.USER_INFO 
+        (user_id, user_pw, user_name, nickName) VALUES 
+        (#{user_id}, #{user_pw}, #{user_name}, #{nickName})        
+  </insert>
+
+
+</mapper>
