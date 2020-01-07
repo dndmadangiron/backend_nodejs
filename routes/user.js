@@ -31,9 +31,10 @@ app.get('/:user_id', function(req, res) {
             res.send({user_check: false});
         } else {
             if (err) {
-                res.send({user_check: false});
                 //에러로그 작성
                 logger.error(err);
+                
+                res.send({user_check: false});
             }
             res.send({user_check: false});
         }
