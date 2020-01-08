@@ -56,4 +56,10 @@ if (process.env.NODE_ENV !== 'production') {
     logger.add(new winston.transports.Console(options.console));
 }
 
+logger.stream = {
+    write: function(message, encoding) {
+        logger.info(message);
+    }
+}
+
 module.exports = logger;

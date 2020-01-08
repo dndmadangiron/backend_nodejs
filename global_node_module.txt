@@ -1,2 +1,0 @@
-modemon
-pm2
