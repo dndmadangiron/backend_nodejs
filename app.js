@@ -7,12 +7,13 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('./config/winston');// logger
 const morgan = require('morgan');// http logger
-const moment = require('moment-timezone');//timezone 설정
 /**[END] 모듈 선언*/
 
 /**[START] 모듈 전처리 */
-morgan.format('myformat', '[:date] ":method :url" :status :res[content-length] - :response-time ms ":user-agent"');
+
+morgan.format('myformat', ' :method :url" :status :res[content-length] - :response-time ms');
 /**[END] 모듈 전처리 */
+
 /**[START] 모듈 적용*/
 app.use(cors());            //CORS 허용 설정
 app.use(bodyParser.json()); //request body로 넘어오는 데이터를 json으로 변환

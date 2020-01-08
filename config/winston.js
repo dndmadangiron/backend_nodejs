@@ -1,5 +1,5 @@
-const rootPath = require('app-root-path');
-const winston = require('winston');
+const rootPath = require('../node_modules/app-root-path');
+const winston = require('../node_modules/winston');
 const process = require('process');
 
 const { combine, timestamp, label, printf } = winston.format;
@@ -29,6 +29,7 @@ const options = {
                 format: 'YYYY-MM-DD HH:mm:ss',
             }),
             customFormat
+            
         )
     },
     console: {
