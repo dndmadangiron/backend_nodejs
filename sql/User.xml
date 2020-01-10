@@ -9,13 +9,15 @@
 
   <insert id="insert_user">
     INSERT INTO madangiron.USER_INFO 
-        (user_id, user_pw, user_name, nickName) VALUES 
-        (#{user_id}, #{user_pw}, #{user_name}, #{nickName})        
+        (user_id, user_pw, user_name, user_nickname) VALUES 
+        (#{user_id}, #{user_pw}, #{user_name}, #{user_nickname})        
   </insert>
 
   <select id="login_user">
-    SELECT user_id, user_pw FROM madangiron.USER_INFO
-    WHERE user_id = #{user_id} AND user_pw = #{user_pw}
+    SELECT user_id
+         , user_pw 
+      FROM madangiron.USER_INFO
+     WHERE user_id = #{user_id} AND user_pw = #{user_pw}
   </select>
 
 </mapper>

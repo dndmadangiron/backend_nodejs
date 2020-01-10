@@ -38,7 +38,21 @@ const options = {
                 format: 'YYYY-MM-DD HH:mm:ss',
             }),
             customFormat
-            
+        )
+    },
+    error: {
+        level: 'error',
+        filename: `${rootPath}/logs/${today}.log`,
+        handleExceptions: true,
+        json: false,
+        maxSize: null,
+        maxFiles: 60,
+        colorize: false,
+        format: combine(
+            timestamp({
+                format: 'YYYY-MM-DD HH:mm:ss',
+            }),
+            customFormat
         )
     },
     console: {
@@ -58,6 +72,7 @@ const options = {
 let logger = new winston.createLogger({
     transports: [
         new winston.transports.File(options.file),
+        new winston.transports.File(options.error),
     ],
     exitOnError: false,
 });
