@@ -13,5 +13,9 @@
         (#{user_id}, #{user_pw}, #{user_name}, #{nickName})        
   </insert>
 
+  <select id="login_user">
+    SELECT user_id, user_pw FROM madangiron.USER_INFO
+    WHERE user_id = #{user_id} AND user_pw = #{user_pw}
+  </select>
 
 </mapper>
