@@ -20,28 +20,25 @@ class ValidationUtils {
             return false;
         }
 
-        
+        return this.isJsonValid(params, reqJson);
+
+    }
+
+    static isJsonValid(params, reqJson) {
+
         if (Object.keys(params).length != Object.keys(reqJson).length) {
             logger.error(preFix + "parameter and apiKey Not Same");
             return false;
         }
 
         //빈 params일 경우
-        if (params==null || 
-            (Object.keys(params).length === 0 && 
-            JSON.stringify(params) === JSON.stringify({}))
-           ) 
-        {
+        if (this.isJsonEmpty(params)) {
             logger.error(preFix + "parameter is Empty");
             return false;
         }
     
         //빈 apiKey일경우
-        if (reqJson==null || 
-            (Object.keys(reqJson).length === 0 && 
-            JSON.stringify(reqJson) === JSON.stringify({}))
-           ) 
-        {
+        if (this.isJsonEmpty(reqJson)) {
             logger.error(preFix + "apiKey must be not null");
             return false;
         }
@@ -64,6 +61,22 @@ class ValidationUtils {
         }
 
         return true;
+    }
+
+    static isJsonEmpty(json) {
+        //빈 params일 경우
+        try {
+            if (json==null || 
+                (Object.keys(json).length === 0 && 
+                JSON.stringify(json) === JSON.stringify({}))
+               ) 
+            {
+                return true;
+            }
+        } catch (error) {
+            return true;
+        }
+        
     }
 }
 

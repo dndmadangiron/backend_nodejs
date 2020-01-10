@@ -12,7 +12,8 @@ const dbconn = mysql.createConnection({
     password:'tkakcy159*',
     database: 'madangiron'
 });
-const Validation = require('../utils/ValidationUtils');
+const Validation = require('../utils/ValidationUtils.js');
+var HttpApi = require('../utils/Http.js');
 
 const mapperPath = path.join(__dirname, '../sql/User.xml');
 mapper.createMapper([mapperPath]);
@@ -20,16 +21,9 @@ mapper.createMapper([mapperPath]);
 const format = {language: 'sql', indent: ' '};
 
 //사용자 아이디 중복검사
-app.get('/users/:user_id', function(req, res) { 
-    const reqJson = 
-    {
-        "user_id":""
-    };
-    let resJson = 
-    {
-        "code": "",
-        "user_check": "",
-    }
+app.get('/users/:user_id', function(req, res) {
+    const reqJson = HttpApi.USER_CHECK.reqJson;
+    let resJson = HttpApi.USER_CHECK.resJson;
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req, reqJson) == false) {
@@ -70,18 +64,8 @@ app.get('/users/:user_id', function(req, res) {
 
 //회원가입
 app.post('/register', function(req, res) {
-    const reqJson = 
-    {
-        "user_id":"",
-        "user_pw":"",
-        "user_name":"",
-        "user_nickname":""
-    };
-    let resJson = 
-    {
-        "code": "",
-        "msg": "",
-    }
+    const reqJson = HttpApi.REGISTER.reqJson;
+    let resJson = HttpApi.REGISTER.resJson;
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req, reqJson) == false) {

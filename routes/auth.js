@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+const Validation = require('../utils/ValidationUtils');
+const HttpApi = require('../utils/Http.js');
+const jwtUtils = require('../utils/JwtUtils.js');
 const path = require('path');
 const logger = require('../config/winston');
 const mysql = require('mysql');
@@ -12,7 +15,7 @@ const dbconn = mysql.createConnection({
     password: 'tkakcy159*',
     database: 'madangiron'
 });
-const Validation = require('../utils/ValidationUtils');
+
 
 const mapperPath = path.join(__dirname, '../sql/User.xml');
 mapper.createMapper([mapperPath]);
@@ -21,16 +24,8 @@ const format = { language: 'sql', indent: ' ' };
 
 //로그인
 app.post('/auth/login', function (req, res) {
-    const reqJson =
-    {
-        "user_id": "",
-        "user_pw": ""
-    };
-    let resJson =
-    {
-        "code": "",
-        "isLoggedIn": "",
-    }
+    const reqJson = HttpApi.LOGIN.reqJson;
+    let resJson = HttpApi.LOGIN.resJson;
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req, reqJson) == false) {
@@ -40,15 +35,29 @@ app.post('/auth/login', function (req, res) {
         return;
     }
 
-    let params = {
-        user_id: req.body.id,
-        user_pw: req.body.pw
-    }
+    let params = req.body;
+
     let query = mapper.getStatement('User', 'login_user', params, format);
     dbconn.query(query, function (err, result, fields) {
         if (result.length == 1) {
-            resJson.code = "200";
-            resJson.isLoggedIn = true;
+            let payload = {
+                user_id: result[0].user_id
+            }
+            if (err) {
+                resJson.code = "503";
+                resJson.isLoggedIn = false;
+            } else {
+                let token = jwtUtils.createJwtToken(payload);
+                console.log(jwtUtils.getTokenPaylod(token));
+                resJson.code = "200";
+                resJson.isLoggedIn = true;
+                // response의 header에 jwt토큰 세팅
+                res.set("token", token);
+            }
+            
+            
+            
+            
             res.send(resJson);
             return;
         }
@@ -65,6 +74,30 @@ app.post('/auth/login', function (req, res) {
             return;
         }
     });
+});
+
+app.post('/auth/token', function(req, res){
+    var header = req.headers;
+    if (header != null && header.token != null) {
+        let token = header.token;
+        console.log(token);
+
+        let payload = jwtUtils.getTokenPaylod(token);
+        console.log(payload);
+        let start = new Date();
+        let now = new Date();
+        let end = new Date();
+        start.setTime(payload.iat * 1000);
+        end.setTime(payload.exp * 1000);
+
+        let timeToExpire = Math.floor((end - now)/1000);
+        let timeout = Math.floor((end - start)/1000);
+
+        console.log("timeToExpire : " + timeToExpire)
+        console.log("timeout : " + timeout);
+
+        res.send(payload);
+    }
 });
 
 
