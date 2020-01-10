@@ -11,7 +11,16 @@ const customFormat = printf(({level, message, timestamp}) => {
 let date = new Date();
 let today = '';
 today += date.getFullYear(); 
-today += (date.getMonth().length == 1) ? '0'+date.getMonth() : date.getMonth();
+/** JINU 수정
+ * getMonth()가 0부터 시작함. 0:January ~ 11:December
+ * 따라서 +1 추가함
+ * 참고 >> https://www.w3schools.com/jsref/jsref_getmonth.asp 
+ * 
+ * 뒷부분도 혹시 return type issue가 있을 수 있어서 ''를 추가함
+ * 해당 주석은 확인 하고 지워도 됨
+ * */
+
+today += ((date.getMonth()+1).length == 1) ? '0'+(date.getMonth()+1) : ''+(date.getMonth()+1);
 today += (date.getDate().length == 1) ? '0'+date.getDate() : date.getDate();
 
 
