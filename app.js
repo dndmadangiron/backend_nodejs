@@ -32,15 +32,8 @@ let auth = require('./routes/auth.js');
 /**[END] router 파일 선언영역*/
 
 /**[START] router 적용영역*/
-//if 토큰없음...
 app.use('/', users);
 app.use('/', auth);
-
-/** Develop comment
- * 나중에 완전히 정리되면, router선언 및 적용 영역으로 이동할 예정
- * (login.js)와 (routes/user.js)의 환경 설정 부분 겹치는게 많으므로 합치는 것도 고려해볼것
- */
-//app.use('/auth/login', login);
 /**[END] router 파일 적용영역*/
 
 
