@@ -25,7 +25,7 @@ class ValidationUtils {
     }
 
     static isJsonValid(params, reqJson) {
-
+        let preFix = "ValidationUtils.isRequestValid(params, keys) : ";
         if (Object.keys(params).length != Object.keys(reqJson).length) {
             logger.error(preFix + "parameter and apiKey Not Same");
             return false;
