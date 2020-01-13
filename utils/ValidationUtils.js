@@ -15,6 +15,10 @@ class ValidationUtils {
         try {
             //제대로된 형식의 json이 넘어오지 않음
             params = req.body;
+			if (this.isJsonEmpty(params)) {
+				params = req.params;
+				console.log(params);
+			}
         } catch (error) {
             logger.error(preFix + "parameter type is not json");
             return false;
@@ -26,10 +30,6 @@ class ValidationUtils {
 
     static isJsonValid(params, reqJson) {
         let preFix = "ValidationUtils.isRequestValid(params, keys) : ";
-        if (Object.keys(params).length != Object.keys(reqJson).length) {
-            logger.error(preFix + "parameter and apiKey Not Same");
-            return false;
-        }
 
         //빈 params일 경우
         if (this.isJsonEmpty(params)) {
@@ -40,6 +40,11 @@ class ValidationUtils {
         //빈 apiKey일경우
         if (this.isJsonEmpty(reqJson)) {
             logger.error(preFix + "apiKey must be not null");
+            return false;
+        }
+		
+		if (Object.keys(params).length != Object.keys(reqJson).length) {
+            logger.error(preFix + "parameter and apiKey Not Same");
             return false;
         }
 

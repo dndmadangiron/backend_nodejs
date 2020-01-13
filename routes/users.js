@@ -33,10 +33,12 @@ app.get('/users/:user_id', function(req, res) {
         return;
     }
 
-    let params = req.body;
+    let params = req.params;
 
     let query = mapper.getStatement('User', 'check_user', params, format);
     dbconn.query(query, function(err, result, fields) {
+		console.log(result);
+		console.log(result.length);
         if (result.length == 0){//결과 없음
             resJson.code = "200";
             resJson.user_check = true;
@@ -44,7 +46,7 @@ app.get('/users/:user_id', function(req, res) {
             return;
         }
         else if (result.length == 1){
-            resJson.code = "503";
+            resJson.code = "403";
             resJson.user_check = false;
             res.send(resJson);
             return;

@@ -1,6 +1,7 @@
 const Validation = require('./ValidationUtils.js');
 const logger = require('../config/winston.js');
 const jwt = require('../node_modules/jsonwebtoken');
+// const jwtPrivate = require('../config/jwtPrivate.js');
 const jwtPrivate = require('../config/jwtPrivate.js');
 
 class JwtUtils {
