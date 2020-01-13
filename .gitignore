@@ -5,3 +5,4 @@ config/jwtPrivate.js
 auto.sh
 auto.bat
 goorm.manifest
+.vscode

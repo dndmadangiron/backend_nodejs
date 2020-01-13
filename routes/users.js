@@ -46,7 +46,7 @@ app.get('/users/:user_id', function(req, res) {
             return;
         }
         else if (result.length == 1){
-            resJson.code = "403";
+            resJson.code = "200";
             resJson.user_check = false;
             res.send(resJson);
             return;
