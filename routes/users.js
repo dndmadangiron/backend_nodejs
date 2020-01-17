@@ -79,7 +79,7 @@ app.get('/users/nickname/:nickname', function(req, res) {
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req, reqJson) == false) {
         resJson.code = "403";
-        resJson.user_check = false;
+        resJson.nickname_check = false;
         res.send(resJson);
         return;
     }
@@ -91,13 +91,13 @@ app.get('/users/nickname/:nickname', function(req, res) {
         try {
             if (result.length == 0){//결과 없음
                 resJson.code = "200";
-                resJson.user_check = true;
+                resJson.nickname_check = true;
                 res.send(resJson);
                 return;
             }
             else if (result.length == 1){
                 resJson.code = "200";
-                resJson.user_check = false;
+                resJson.nickname_check = false;
                 res.send(resJson);
                 return;
             } else {
@@ -107,7 +107,7 @@ app.get('/users/nickname/:nickname', function(req, res) {
                     resJson.code = "503";
                     logger.error(err);
                 }            
-                resJson.user_check = false;
+                resJson.nickname_check = false;
                 res.send(resJson);
                 return;
             }
@@ -115,7 +115,7 @@ app.get('/users/nickname/:nickname', function(req, res) {
             //에러로그 작성
             resJson.code = "503";
             logger.error(err);
-            resJson.user_check = false;
+            resJson.nickname_check = false;
             res.send(resJson);
             return;
         }
