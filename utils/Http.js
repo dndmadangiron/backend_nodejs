@@ -32,7 +32,7 @@ let HttpApi =
         },
         resJson : {
             "code": "",
-            "msg": "",
+            "isRegister": "",
         }
     }, 
     // POST /auth/login

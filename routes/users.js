@@ -131,7 +131,7 @@ app.post('/register', function(req, res) {
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req, reqJson) == false) {
         resJson.code = "403";
-        resJson.msg = "잘못된 파라메터입니다.";
+        resJson.isRegister = false;
         res.send(resJson);
         return;
     }
@@ -143,12 +143,12 @@ app.post('/register', function(req, res) {
     dbconn.query(query, function(err, result, fields) {
         if (err) {
             resJson.code = "503";
-            resJson.msg = "회원가입을 실패하였습니다.";
+            resJson.isRegister = false;
             res.send(resJson);
             return;
         } else {
             resJson.code = "200";
-            resJson.msg = "회원가입이 완료되었습니다.";
+            resJson.isRegister = true;
             res.send(resJson);
             return;
         }
