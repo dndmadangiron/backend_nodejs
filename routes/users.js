@@ -37,30 +37,38 @@ app.get('/users/:user_id', function(req, res) {
 
     let query = mapper.getStatement('User', 'check_user', params, format);
     dbconn.query(query, function(err, result, fields) {
-		console.log(result);
-		console.log(result.length);
-        if (result.length == 0){//결과 없음
-            resJson.code = "200";
-            resJson.user_check = true;
-            res.send(resJson);
-            return;
-        }
-        else if (result.length == 1){
-            resJson.code = "200";
-            resJson.user_check = false;
-            res.send(resJson);
-            return;
-        } else {
-            resJson.code = "503";
-            if (err) {
-                //에러로그 작성
+        try {
+            if (result.length == 0){//결과 없음
+                resJson.code = "200";
+                resJson.user_check = true;
+                res.send(resJson);
+                return;
+            }
+            else if (result.length == 1){
+                resJson.code = "200";
+                resJson.user_check = false;
+                res.send(resJson);
+                return;
+            } else {
                 resJson.code = "503";
-                logger.error(err);
-            }            
+                if (err) {
+                    //에러로그 작성
+                    resJson.code = "503";
+                    logger.error(err);
+                }            
+                resJson.user_check = false;
+                res.send(resJson);
+                return;
+            }
+        } catch (error) {
+            //에러로그 작성
+            resJson.code = "503";
+            logger.error(err);
             resJson.user_check = false;
             res.send(resJson);
             return;
         }
+        
     });
 });
 
