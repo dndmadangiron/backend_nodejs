@@ -138,21 +138,28 @@ app.post('/register', function(req, res) {
 
     let params = req.body;
 
-    let query = mapper.getStatement('User', 'insert_user', params, format);
+    try {
+        let query = mapper.getStatement('User', 'insert_user', params, format);
 
-    dbconn.query(query, function(err, result, fields) {
-        if (err) {
-            resJson.code = "503";
-            resJson.isRegister = false;
-            res.send(resJson);
-            return;
-        } else {
-            resJson.code = "200";
-            resJson.isRegister = true;
-            res.send(resJson);
-            return;
-        }
-    });
+        dbconn.query(query, function(err, result, fields) {
+            if (err) {
+                resJson.code = "403";
+                resJson.isRegister = false;
+                res.send(resJson);
+                return;
+            } else {
+                resJson.code = "200";
+                resJson.isRegister = true;
+                res.send(resJson);
+                return;
+            }
+        });
+    } catch (error) {
+        resJson.code = "503";
+        resJson.isRegister = false;
+        res.send(resJson);
+        return;
+    }    
 });
 
 
