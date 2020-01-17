@@ -11,6 +11,17 @@ let HttpApi =
             "user_check": "",
         }
     },
+    // GET /users/nickname/:user_id
+    NICKNAME_CHECK: {
+        reqJson: 
+        {
+            "nickname":""
+        },
+        resJson : {
+            "code": "",
+            "nickname_check": "",
+        }
+    },
     // POST /register
     REGISTER: {
         reqJson :  {

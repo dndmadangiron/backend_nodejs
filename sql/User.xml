@@ -7,6 +7,11 @@
     WHERE user_id = #{user_id}
   </select>
 
+    <select id="check_nickname">
+      SELECT user_nickname FROM madangiron.USER_INFO
+      WHERE user_nickname = #{nickname}
+    </select>
+
   <insert id="insert_user">
     INSERT INTO madangiron.USER_INFO 
         (user_id, user_pw, user_name, user_nickname) VALUES 
