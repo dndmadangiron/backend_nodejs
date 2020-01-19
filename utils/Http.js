@@ -8,7 +8,9 @@ let HttpApi =
         },
         resJson : {
             "code": "",
-            "user_check": "",
+            "result": {
+				"user_check": ""
+			}
         }
     },
     // GET /users/nickname/:user_id
@@ -19,7 +21,9 @@ let HttpApi =
         },
         resJson : {
             "code": "",
-            "nickname_check": "",
+			"result": {
+                "nickname_check": "",
+			}
         }
     },
     // POST /register
@@ -32,7 +36,9 @@ let HttpApi =
         },
         resJson : {
             "code": "",
-            "isRegister": "",
+			"result": {
+                "isRegister": ""
+			}
         }
     }, 
     // POST /auth/login
@@ -43,7 +49,9 @@ let HttpApi =
         },
         resJson : {
             "code": "",
-            "isLoggedIn": "",
+			"result": {
+                "isLoggedIn": ""
+			}
         }
     }
 }

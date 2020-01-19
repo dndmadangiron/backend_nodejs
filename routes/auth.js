@@ -30,7 +30,7 @@ app.post('/auth/login', function (req, res) {
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req, reqJson) == false) {
         resJson.code = "403";
-        resJson.isLoggedIn = false;
+        resJson.result.isLoggedIn = false;
         res.send(resJson);
         return;
     }
@@ -45,12 +45,12 @@ app.post('/auth/login', function (req, res) {
             }
             if (err) {
                 resJson.code = "503";
-                resJson.isLoggedIn = false;
+                resJson.result.isLoggedIn = false;
             } else {
                 let token = jwtUtils.createJwtToken(payload);
                 console.log(jwtUtils.getTokenPaylod(token));
                 resJson.code = "200";
-                resJson.isLoggedIn = true;
+                resJson.result.isLoggedIn = true;
                 // response의 header에 jwt토큰 세팅
                 res.set("token", token);
             }
@@ -63,13 +63,13 @@ app.post('/auth/login', function (req, res) {
         }
         else if (result.length > 1) { //filtering DB Error
             resJson.code = "503";
-            resJson.isLoggedIn = false;
+            resJson.result.isLoggedIn = false;
             res.send(resJson);
             return;
         }
         else {
             resJson.code = "503";
-            resJson.isLoggedIn = false;
+            resJson.result.isLoggedIn = false;
             res.send(resJson);
             return;
         }
