@@ -20,8 +20,11 @@ today += date.getFullYear();
  * 해당 주석은 확인 하고 지워도 됨
  * */
 
-today += ((date.getMonth()+1).length == 1) ? '0'+(date.getMonth()+1) : ''+(date.getMonth()+1);
-today += (date.getDate().length == 1) ? '0'+date.getDate() : date.getDate();
+var month_str = (date.getMonth()+1).toString();
+var date_str = date.getDate().toString();
+
+today += (month_str.length == 1) ? '0'+(date.getMonth()+1) : ''+(date.getMonth()+1);
+today += (date_str.length == 1) ? '0'+date.getDate() : date.getDate();
 
 
 const options = {

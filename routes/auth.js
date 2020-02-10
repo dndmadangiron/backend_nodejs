@@ -6,15 +6,8 @@ const HttpApi = require('../utils/Http.js');
 const jwtUtils = require('../utils/JwtUtils.js');
 const path = require('path');
 const logger = require('../config/winston');
-const mysql = require('mysql');
 const mapper = require('mybatis-mapper');
-const dbconn = mysql.createConnection({
-    host: '104.196.13.195',
-    port: 3306,
-    user: 'root',
-    password: 'tkakcy159*',
-    database: 'madangiron'
-});
+const dbconn = require('../config/dbConn');
 
 
 const mapperPath = path.join(__dirname, '../sql/User.xml');
@@ -45,18 +38,14 @@ app.post('/auth/login', function (req, res) {
             }
             if (err) {
                 resJson.code = "503";
-                resJson.result.isLoggedIn = false;
+                resJson.result.isLoggedIn = false;                
             } else {
                 let token = jwtUtils.createJwtToken(payload);
-                console.log(jwtUtils.getTokenPaylod(token));
                 resJson.code = "200";
                 resJson.result.isLoggedIn = true;
                 // response의 header에 jwt토큰 세팅
                 res.set("token", token);
             }
-            
-            
-            
             
             res.send(resJson);
             return;

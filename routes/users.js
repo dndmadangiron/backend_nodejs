@@ -3,15 +3,9 @@ const app = express();
 
 const path = require('path');
 const logger = require('../config/winston');
-const mysql = require('mysql');
 const mapper = require('mybatis-mapper');
-const dbconn = mysql.createConnection({
-    host:'104.196.13.195',
-    port:3306,
-    user:'root',
-    password:'tkakcy159*',
-    database: 'madangiron'
-});
+const dbconn = require('../config/dbConn');
+
 const Validation = require('../utils/ValidationUtils.js');
 var HttpApi = require('../utils/Http.js');
 

@@ -1,8 +1,11 @@
 node_modules
 package-lock.json
 logs
-config/jwtPrivate.js
 auto.sh
 auto.bat
 goorm.manifest
 .vscode
+
+# configs
+config/jwtPrivate.js
+config/dbConn.js
