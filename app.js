@@ -29,13 +29,14 @@ app.use(morgan('myformat', {stream: logger.stream}));
 /**[START] router 선언영역*/
 let users = require('./routes/users.js');
 let auth = require('./routes/auth.js');
+let product = require('./routes/product.js');
 /**[END] router 파일 선언영역*/
 
 /**[START] router 적용영역*/
 app.use('/', users);
 app.use('/', auth);
+app.use('/', product);
 /**[END] router 파일 적용영역*/
-
 
 //서버 start
 app.listen(PORT, function() {

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Product">
+
+  <select id="get_cate_all">
+    SELECT cate_id
+         , ''||cate_bg||cate_md||cate_sm||'' AS cate_code
+         , cate_name
+         , matchYN 
+      FROM CATEGORY
+    WHERE 1=1
+    ORDER BY cate_bg, cate_md, cate_sm
+  </select>
+
+  <select id="get_cate_bg">
+    SELECT cate_id
+         , ''||cate_bg||cate_md||cate_sm||'' AS cate_code
+         , cate_name
+         , matchYN 
+      FROM CATEGORY
+    WHERE 1=1
+    <if test='cate_bg != null && cate_bg != ""'>
+      AND cate_bg=#{cate_bg}
+    </if>
+      AND cate_md='00'
+      AND cate_sm='00'
+    ORDER BY cate_bg, cate_md, cate_sm
+  </select>
+
+  <select id="get_cate_md">
+    SELECT cate_id
+         , ''||cate_bg||cate_md||cate_sm||'' AS cate_code
+         , cate_name
+         , matchYN 
+      FROM CATEGORY
+    WHERE 1=1
+    <if test='cate_bg != null && cate_bg != ""'>
+      AND cate_bg=#{cate_bg}
+    </if>
+    <if test='cate_md != null && cate_md != ""'>
+      AND cate_md=#{cate_md}
+    </if>
+      AND cate_sm='00'
+    ORDER BY cate_bg, cate_md, cate_sm
+  </select>
+
+  <select id="get_cate_sm">
+    SELECT cate_id
+         , cate_bg||cate_md||cate_sm AS cate_code
+         , cate_name
+         , matchYN 
+      FROM CATEGORY
+    WHERE 1=1
+    <if test='cate_bg != null && cate_bg != ""'>
+      AND cate_bg=#{cate_bg}
+    </if>
+    <if test='cate_md != null && cate_md != ""'>
+      AND cate_md=#{cate_md}
+    </if>
+    <if test='cate_sm != null && cate_sm != ""'>
+      AND cate_sm=#{cate_sm}
+    </if>
+    ORDER BY cate_bg, cate_md, cate_sm
+  </select>
+
+  <insert id="insert_user">
+    INSERT INTO madangiron.USER_INFO 
+        (user_id, user_pw, user_name, user_nickname) VALUES 
+        (#{user_id}, #{user_pw}, #{user_name}, #{user_nickname})        
+  </insert>
+
+</mapper>

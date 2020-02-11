@@ -8,22 +8,14 @@ class ValidationUtils {
           json의 형태
     */
 
-    static isRequestValid(req, reqJson) {
-        let preFix = "ValidationUtils.isRequestValid(params, keys) : ";
-
-        let params = "";
-        try {
-            //제대로된 형식의 json이 넘어오지 않음
-            params = req.body;
-			if (this.isJsonEmpty(params)) {
-				params = req.params;
-				console.log(params);
-			}
-        } catch (error) {
-            logger.error(preFix + "parameter type is not json");
+    static isRequestValid(params, HTTP) {
+        let preFix = "ValidationUtils.isRequestValid(req, reqJson) : ";
+        let reqJson = HTTP.reqJson;
+        if (!reqJson) {
+            logger.error(preFix + "check isRequestValid HTTP parameter")
             return false;
         }
-
+        
         return this.isJsonValid(params, reqJson);
 
     }
@@ -31,18 +23,17 @@ class ValidationUtils {
     static isJsonValid(params, reqJson) {
         let preFix = "ValidationUtils.isRequestValid(params, keys) : ";
 
-        //빈 params일 경우
-        if (this.isJsonEmpty(params)) {
-            logger.error(preFix + "parameter is Empty");
+        //빈 req가 아닌데 빈 params일 경우
+        if (this.isJsonEmpty(params) && !this.isJsonEmpty(reqJson)) {
+            logger.error(preFix + "this parameter cannot be Empty");
             return false;
         }
     
-        //빈 apiKey일경우
-        if (this.isJsonEmpty(reqJson)) {
-            logger.error(preFix + "apiKey must be not null");
-            return false;
-        }
-		
+        // //빈 apiKey일경우 //GET 요청시 빈 파라마터도 요청하기 때문에 주석
+        // if (this.isJsonEmpty(reqJson)) {
+        //     logger.error(preFix + "apiKey must be not null");
+        //     return false;
+        // }
 		if (Object.keys(params).length != Object.keys(reqJson).length) {
             logger.error(preFix + "parameter and apiKey Not Same");
             return false;

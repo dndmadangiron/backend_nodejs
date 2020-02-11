@@ -21,7 +21,7 @@ app.post('/auth/login', function (req, res) {
     let resJson = HttpApi.LOGIN.resJson;
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
-    if (Validation.isRequestValid(req, reqJson) == false) {
+    if (Validation.isRequestValid(req.body, HttpApi.LOGIN) == false) {
         resJson.code = "403";
         resJson.result.isLoggedIn = false;
         res.send(resJson);
@@ -31,6 +31,8 @@ app.post('/auth/login', function (req, res) {
     let params = req.body;
 
     let query = mapper.getStatement('User', 'login_user', params, format);
+    logger.info("SQL :: " + query);
+    
     dbconn.query(query, function (err, result, fields) {
         if (result.length == 1) {
             let payload = {

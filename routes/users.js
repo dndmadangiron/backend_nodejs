@@ -20,7 +20,7 @@ app.get('/users/:user_id', function(req, res) {
     let resJson = HttpApi.USER_CHECK.resJson;
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
-    if (Validation.isRequestValid(req, reqJson) == false) {
+    if (Validation.isRequestValid(req.params, HttpApi.USER_CHECK) == false) {
         resJson.code = "403";
         resJson.result.user_check = false;
         res.send(resJson);
@@ -30,6 +30,8 @@ app.get('/users/:user_id', function(req, res) {
     let params = req.params;
 
     let query = mapper.getStatement('User', 'check_user', params, format);
+    logger.info("SQL :: " + query);
+    
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
@@ -71,7 +73,7 @@ app.get('/users/nickname/:nickname', function(req, res) {
     let resJson = HttpApi.NICKNAME_CHECK.resJson;
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
-    if (Validation.isRequestValid(req, reqJson) == false) {
+    if (Validation.isRequestValid(req.params, HttpApi.NICKNAME_CHECK) == false) {
         resJson.code = "403";
         resJson.result.nickname_check = false;
         res.send(resJson);
@@ -81,6 +83,8 @@ app.get('/users/nickname/:nickname', function(req, res) {
     let params = req.params;
 
     let query = mapper.getStatement('User', 'check_nickname', params, format);
+    logger.info("SQL :: " + query);
+    
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
@@ -123,7 +127,7 @@ app.post('/register', function(req, res) {
     let resJson = HttpApi.REGISTER.resJson;
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
-    if (Validation.isRequestValid(req, reqJson) == false) {
+    if (Validation.isRequestValid(req.body, HttpApi.REGISTER) == false) {
         resJson.code = "403";
         resJson.result.isRegister = false;
         res.send(resJson);
@@ -134,6 +138,7 @@ app.post('/register', function(req, res) {
 
     try {
         let query = mapper.getStatement('User', 'insert_user', params, format);
+        logger.info("SQL :: " + query);
 
         dbconn.query(query, function(err, result, fields) {
             if (err) {
