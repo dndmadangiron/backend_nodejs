@@ -27,7 +27,7 @@ app.get('/category/all', function(req, res) {
         res.send(resJson);
         return;
     }
-
+    
     let params = req.params;
 
     let query = mapper.getStatement(mapper_ns, 'get_cate_all', params, format);
@@ -45,6 +45,7 @@ app.get('/category/all', function(req, res) {
 
                 // resJson.result.category = this.makeCategoryTree(result);
                 resJson.result.category = result
+
 
                 res.send(resJson);
                 return;
@@ -82,8 +83,6 @@ app.get('/category/bg', function(req, res) {
 
     var params = req.body;
 
-    params.cate_md = "00";
-    params.cate_sm = "00";
     let query = mapper.getStatement(mapper_ns, 'get_cate_bg', params, format);
     logger.info(mapper_ns+".get_cate :: " + query);
     
@@ -182,7 +181,7 @@ app.get('/category/sm', function(req, res) {
     let params = req.query;
 
     let query = mapper.getStatement(mapper_ns, 'get_cate_sm', params, format);
-    logger.info(mapper_ns+".get_cate :: " + query);
+    logger.info(mapper_ns+".get_cate :: " + query); 
     
     dbconn.query(query, function(err, result, fields) {
         try {
@@ -216,30 +215,8 @@ app.get('/category/sm', function(req, res) {
 });
 
 function makeCategoryTree(res) {
-    if (res == null) return;
-
     
-
-    for (var i in res) {
-        
-    }
 
 }
 
 module.exports = app;
-
-
-
-
-
-
-
-
-category = [{
-    "cate_id":1,
-    "cate_bg":"01",
-    "cate_md":"00",
-    "cate_sm":"00",
-    "cate_name":"브랜드패션",
-    "matchYN":"N"
-}]

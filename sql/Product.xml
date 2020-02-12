@@ -4,7 +4,7 @@
 
   <select id="get_cate_all">
     SELECT cate_id
-         , ''||cate_bg||cate_md||cate_sm||'' AS cate_code
+         , cate_bg , cate_md, cate_sm
          , cate_name
          , matchYN 
       FROM CATEGORY
@@ -14,7 +14,7 @@
 
   <select id="get_cate_bg">
     SELECT cate_id
-         , ''||cate_bg||cate_md||cate_sm||'' AS cate_code
+         , cate_bg , cate_md, cate_sm
          , cate_name
          , matchYN 
       FROM CATEGORY
@@ -29,7 +29,7 @@
 
   <select id="get_cate_md">
     SELECT cate_id
-         , ''||cate_bg||cate_md||cate_sm||'' AS cate_code
+         , cate_bg , cate_md, cate_sm
          , cate_name
          , matchYN 
       FROM CATEGORY
@@ -40,13 +40,16 @@
     <if test='cate_md != null && cate_md != ""'>
       AND cate_md=#{cate_md}
     </if>
+      AND cate_md!='00'
       AND cate_sm='00'
     ORDER BY cate_bg, cate_md, cate_sm
   </select>
 
   <select id="get_cate_sm">
     SELECT cate_id
-         , cate_bg||cate_md||cate_sm AS cate_code
+         , cate_bg
+         , cate_md
+         , cate_sm
          , cate_name
          , matchYN 
       FROM CATEGORY
@@ -60,6 +63,8 @@
     <if test='cate_sm != null && cate_sm != ""'>
       AND cate_sm=#{cate_sm}
     </if>
+      AND cate_md!='00'
+      AND cate_sm!='00'
     ORDER BY cate_bg, cate_md, cate_sm
   </select>
 
