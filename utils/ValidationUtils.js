@@ -34,8 +34,8 @@ class ValidationUtils {
         //     logger.error(preFix + "apiKey must be not null");
         //     return false;
         // }
-		if (Object.keys(params).length != Object.keys(reqJson).length) {
-            logger.error(preFix + "parameter and apiKey Not Same");
+		if (Object.keys(params).length < Object.keys(reqJson).length) {
+            logger.error(preFix + "parameter keys length is not valid");
             return false;
         }
 

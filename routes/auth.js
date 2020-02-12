@@ -18,7 +18,7 @@ const format = { language: 'sql', indent: ' ' };
 //로그인
 app.post('/auth/login', function (req, res) {
     const reqJson = HttpApi.LOGIN.reqJson;
-    let resJson = HttpApi.LOGIN.resJson;
+    let resJson = clone.cloneDeep(HttpApi.LOGIN.resJson);
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.body, HttpApi.LOGIN) == false) {

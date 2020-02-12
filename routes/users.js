@@ -5,6 +5,7 @@ const path = require('path');
 const logger = require('../config/winston');
 const mapper = require('mybatis-mapper');
 const dbconn = require('../config/dbConn');
+const clone = require('lodash');
 
 const Validation = require('../utils/ValidationUtils.js');
 var HttpApi = require('../utils/Http.js');
@@ -17,7 +18,7 @@ const format = {language: 'sql', indent: ' '};
 //사용자 아이디 중복검사
 app.get('/users/:user_id', function(req, res) {
     const reqJson = HttpApi.USER_CHECK.reqJson;
-    let resJson = HttpApi.USER_CHECK.resJson;
+    let resJson = clone.cloneDeep(HttpApi.USER_CHECK.resJson);
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.params, HttpApi.USER_CHECK) == false) {
@@ -70,7 +71,7 @@ app.get('/users/:user_id', function(req, res) {
 //사용자 아이디 중복검사
 app.get('/users/nickname/:nickname', function(req, res) {
     const reqJson = HttpApi.NICKNAME_CHECK.reqJson;
-    let resJson = HttpApi.NICKNAME_CHECK.resJson;
+    let resJson = clone.cloneDeep(HttpApi.NICKNAME_CHECK.resJson);
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.params, HttpApi.NICKNAME_CHECK) == false) {
@@ -124,7 +125,7 @@ app.get('/users/nickname/:nickname', function(req, res) {
 //회원가입
 app.post('/register', function(req, res) {
     const reqJson = HttpApi.REGISTER.reqJson;
-    let resJson = HttpApi.REGISTER.resJson;
+    let resJson = clone.cloneDeep(HttpApi.REGISTER.resJson);
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.body, HttpApi.REGISTER) == false) {
