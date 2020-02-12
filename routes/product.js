@@ -8,6 +8,7 @@ const dbconn = require('../config/dbConn');
 
 const Validation = require('../utils/ValidationUtils.js');
 var HttpApi = require('../utils/Http.js');
+const clone = require('lodash');
 
 const mapperPath = path.join(__dirname, '../sql/Product.xml');
 mapper.createMapper([mapperPath]);
@@ -18,7 +19,7 @@ const format = {language: 'sql', indent: ' '};
 // 카테고리 전체 조회
 app.get('/category/all', function(req, res) {
     const reqJson = HttpApi.CATE_ALL.reqJson
-    let resJson = HttpApi.CATE_ALL.resJson;
+    let resJson = clone.cloneDeep(HttpApi.CATE_ALL.resJson);
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.query, HttpApi.CATE_ALL) == false) {
@@ -43,8 +44,8 @@ app.get('/category/all', function(req, res) {
             else if (result.length > 0){
                 resJson.code = "200";
 
-                // resJson.result.category = this.makeCategoryTree(result);
-                resJson.result.category = result
+                resJson.result.category = makeCategoryTree(result);
+                // resJson.result.category = result
 
 
                 res.send(resJson);
@@ -59,7 +60,7 @@ app.get('/category/all', function(req, res) {
                 res.send(resJson);
                 return;
             }
-        } catch (error) {
+        } catch (err) {
             //에러로그 작성
             resJson.code = "503";
             logger.error(err);
@@ -72,7 +73,7 @@ app.get('/category/all', function(req, res) {
 // 카테고리 대분류 조회
 app.get('/category/bg', function(req, res) {
     const reqJson = HttpApi.CATE_BG.reqJson;
-    let resJson = HttpApi.CATE_BG.resJson;
+    let resJson = clone.cloneDeep(HttpApi.CATE_BG.resJson);
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.query, HttpApi.CATE_BG) == false) {
@@ -107,7 +108,7 @@ app.get('/category/bg', function(req, res) {
                 res.send(resJson);
                 return;
             }
-        } catch (error) {
+        } catch (err) {
             //에러로그 작성
             resJson.code = "503";
             logger.error(err);
@@ -120,7 +121,7 @@ app.get('/category/bg', function(req, res) {
 // 카테고리 중분류 조회
 app.get('/category/md', function(req, res) {
     const reqJson = HttpApi.CATE_MD.reqJson;
-    let resJson = HttpApi.CATE_MD.resJson;
+    let resJson = clone.cloneDeep(HttpApi.CATE_MD.resJson);
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.query, HttpApi.CATE_MD) == false) {
@@ -156,7 +157,7 @@ app.get('/category/md', function(req, res) {
                 res.send(resJson);
                 return;
             }
-        } catch (error) {
+        } catch (err) {
             //에러로그 작성
             resJson.code = "503";
             logger.error(err);
@@ -169,7 +170,7 @@ app.get('/category/md', function(req, res) {
 // 카테고리 소분류 조회
 app.get('/category/sm', function(req, res) {
     const reqJson = HttpApi.CATE_SM.reqJson;
-    let resJson = HttpApi.CATE_SM.resJson;
+    let resJson = clone.cloneDeep(HttpApi.CATE_SM.resJson);
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.query, HttpApi.CATE_SM) == false) {
@@ -204,7 +205,7 @@ app.get('/category/sm', function(req, res) {
                 res.send(resJson);
                 return;
             }
-        } catch (error) {
+        } catch (err) {
             //에러로그 작성
             resJson.code = "503";
             logger.error(err);
@@ -215,8 +216,15 @@ app.get('/category/sm', function(req, res) {
 });
 
 function makeCategoryTree(res) {
-    
+    let list;
 
+
+    let len = res.length
+    let bg=0,md=0,sm=0;
+    for(i=0;i<len;i++){
+        
+    }
+    
 }
 
 module.exports = app;

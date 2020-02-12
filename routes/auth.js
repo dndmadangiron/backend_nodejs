@@ -8,7 +8,7 @@ const path = require('path');
 const logger = require('../config/winston');
 const mapper = require('mybatis-mapper');
 const dbconn = require('../config/dbConn');
-
+const clone = require('lodash');
 
 const mapperPath = path.join(__dirname, '../sql/User.xml');
 mapper.createMapper([mapperPath]);
