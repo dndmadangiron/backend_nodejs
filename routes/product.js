@@ -33,7 +33,6 @@ app.get('/category/all', function(req, res) {
 
     let query = mapper.getStatement(mapper_ns, 'get_cate_all', params, format);
     logger.info(mapper_ns+".get_cate :: " + query);
-
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
@@ -43,10 +42,9 @@ app.get('/category/all', function(req, res) {
             }
             else if (result.length > 0){
                 resJson.code = "200";
-
                 resJson.result.category = makeCategoryTree(result);
                 // resJson.result.category = result
-
+                
 
                 res.send(resJson);
                 return;
@@ -216,15 +214,62 @@ app.get('/category/sm', function(req, res) {
 });
 
 function makeCategoryTree(res) {
-    let list;
+    console.log("makeCategoryTree is running");
+    /**Function's rule
+     * 
+     * 1. function's parameter 'res' is json type about category data.
+     * 2. Category is devided by three property that cate_bg, cate_md, cate_sm.
+     *    Each property means category big, middle, small
+     * 3. cate_bg(1~*), cate_md(0~*), cate_sm(0~*)
+     * 4. Each tuple MUST have rule 2's three property.
+     * 5. Property of tuples has descend order.
+     *    Ex) 100 110 111 112 113 120 121 122 123 200 210 211 212 220 221 222 223
+     * 6. Structure of return value
+     *    Ex) [ 100->{110->(111 112 113), {120->(121 122 123)} ] , [ 200->{210->(211 212), 220->(221)} ]
+     *    
+     */
 
-
-    let len = res.length
-    let bg=0,md=0,sm=0;
-    for(i=0;i<len;i++){
-        
-    }
+     
+    let list = [];
     
+    let idx_bg = -1;
+    let idx_md = -1;
+    let i = 0;
+
+    while(res[i]!=null){
+        if(res[i].cate_md=='00'&&res[i].cate_sm=='00'){
+            list.push(res[i]);
+            idx_bg++;
+            i++;
+            idx_md = -1;
+
+            list[idx_bg].item_md = [];
+            
+            while(res[i].cate_md!='00'){
+                if(i==104){
+                }
+
+                if(res[i].cate_sm=='00'){
+                    list[idx_bg].item_md.push(res[i]);
+                    idx_md++;
+                    i++;
+
+                    list[idx_bg].item_md[idx_md].item_sm = [];
+                }
+                else if(res[i].cate_sm!='00'){
+                    if(i==104){
+                    }
+                    list[idx_bg].item_md[idx_md].item_sm.push(res[i]);
+                    i++;
+                    
+                    if(res[i]==null){
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return list;
 }
 
 module.exports = app;
