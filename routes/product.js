@@ -214,6 +214,7 @@ app.get('/category/sm', function(req, res) {
 });
 
 function makeCategoryTree(res) {
+    let startTime = new Date().getTime();
     console.log("makeCategoryTree is running");
     /**Function's rule
      * 
@@ -269,6 +270,9 @@ function makeCategoryTree(res) {
             }
         }
     }
+
+    let endTime = new Date().getTime();
+    logger.info("makeCategoryTree function using time : " + (endTime-startTime) + "ms");
     return list;
 }
 
