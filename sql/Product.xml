@@ -68,6 +68,34 @@
     ORDER BY cate_bg, cate_md, cate_sm
   </select>
 
+  <sql id="select_prd_name">
+    SELECT MCH.mch_prd_id
+          , MCH.mch_prd_cate
+          , CAT.cate_name
+          , MCH.mch_prd_name 
+          FROM MCH_PRD_LIST AS MCH
+          JOIN CATEGORY AS CAT
+            ON MCH.mch_prd_cate=CONCAT(CAT.cate_bg, CAT.cate_md, CAT.cate_sm)
+        WHERE MCH.mch_prd_name LIKE CONCAT('%', #{prd_name},'%')
+      <if test='prd_id != null && prd_id != ""'>
+        AND MCH.mch_prd_id=#{prd_id}
+      </if>
+  </sql>
+
+  <select id="search_prd_name">
+     <include refid="select_prd_name" />
+        ORDER BY MCH.mch_prd_id DESC
+        <if test='page != null && page != "" && size != null && size != ""'>
+          LIMIT ${page}, ${size}
+        </if>
+  </select>
+
+  <select id="search_cnt_prd_name">
+    SELECT COUNT(*) AS total FROM (
+      <include refid="select_prd_name" />
+    ) AS TBL
+  </select>
+
   <insert id="insert_user">
     INSERT INTO madangiron.USER_INFO 
         (user_id, user_pw, user_name, user_nickname) VALUES 

@@ -108,6 +108,24 @@ let HttpApi =
         }
     },
 
+    // 검색 : 매치 상품명
+    // GET /search/prdName
+    SEARCH_PRD: {
+        reqJson : {
+            "prd_name": "",
+            //prd_id 옵션
+            //page 페이지
+            //size 페이지 사이즈
+         },
+        resJson : {
+            "code": "",
+			"result": {
+                "total" : '',
+                "products": {}
+			}
+        }
+    },
+
 
 }
 
