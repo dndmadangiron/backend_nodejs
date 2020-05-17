@@ -1,4 +1,4 @@
-function run_cmd(){
+run_cmd(){
     cmd=$1
     echo ${cmd}
     OUTPUT="$(${cmd})"
