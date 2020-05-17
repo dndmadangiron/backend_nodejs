@@ -1,35 +1,29 @@
-## this file must be located at project directory. ##
+function run_cmd(){
+    cmd=$1
+    echo ${cmd}
+    OUTPUT="$(${cmd})"
+    echo "${OUTPUT}"
+}
 
 # 0. timezone setting(Asia/Seoul)
-# sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
-# 1. git pull
-echo "cd /home/ssh_user/server"
-OUTPUT0="$(cd /home/ssh_user/server)"
-echo "${OUTPUT0}"
+sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
+# 1. move to project directory
+move_to_prj="cd /node-app/server"
+run_cmd move_to_prj
 
-echo "> git pull"
-OUTPUT1="$(git pull)"
+# 2. git pull
+git_pull="git pull"
+run_cmd git_pull
 
-echo "${OUTPUT1}"
+# 3. npm install (install project dependency)i
+npm_install="npm install"
+run_cmd npm_install
 
+# 4. restart pm2 (app)
+pm2_kill="pm2 kill"
+run_cmd pm2_kill
 
-
-
-# 2. npm install (install project dependency)i
-echo "> npm install"
-OUTPUT2="$(npm install)"
-
-echo "${OUTPUT2}"
-
-
-
-# 3. restart pm2 (app)
-echo "> pm2 kill"
-echo $(pm2 kill)
 APP_START="pm2 start --name=\"app\" app.js --watch --ignore-watch=\"logs/*\""
-echo "> ${APP_START}"
-OUTPUT3="$(${APP_START})"
-
-echo "${OUTPUT3}"
+run_cmd APP_START
 
