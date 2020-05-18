@@ -280,6 +280,76 @@ app.get('/search/prdName', function(req, res) {
     });
 });
 
+
+app.get('/search/rank', function(req, res) {
+    const reqJson = HttpApi.SEARCH_PRD.reqJson;
+    let resJson = clone.cloneDeep(HttpApi.SEARCH_PRD.resJson);
+
+    //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
+    if (Validation.isRequestValid(req.query, HttpApi.SEARCH_PRD) == false) {
+        resJson.code = "403";
+        res.send(resJson);
+        return;
+    }
+
+    let params = req.query;
+
+    if (params.page != null && typeof(page) == 'number' &&
+        params.size != null && typeof(size) == 'number')
+    {
+        page = page * size;
+    }
+    let cnt_query =  mapper.getStatement(mapper_ns, 'search_cnt_prd_name', params, format);
+    var cntDbconn = require('../config/dbConn');
+    logger.info(mapper_ns+".search_cnt_prd_name :: \n" + cnt_query); 
+    cntDbconn.query(cnt_query, function(err, result, fields) {
+        try {
+            resJson.result.total = result[0].total;
+        } catch (err) {
+            logger.error(err);
+        }
+        
+    });
+    
+
+    let query = mapper.getStatement(mapper_ns, 'search_prd_name', params, format);
+    logger.info(mapper_ns+".search_prd_name :: \n" + query); 
+    
+    dbconn.query(query, function(err, result, fields) {
+        try {
+            if (result.length == 0){//결과 없음
+                resJson.code = "200";
+                res.send(resJson);
+                return;
+            }
+            else if (result.length > 0){
+                resJson.code = "200";
+                resJson.result.products=result;
+                res.send(resJson);
+                return;
+            } else {
+                resJson.code = "503";
+                if (err) {
+                    //에러로그 작성
+                    logger.error(err);
+                }
+                res.send(resJson);
+                return;
+            }
+        } catch (err) {
+            //에러로그 작성
+            resJson.code = "503";
+            logger.error(err);
+            res.send(resJson);
+            return;
+        }
+    });
+});
+
+
+
+
+//카테고리 전체 조회시 트리구조로 만듦
 function makeCategoryTree(res) {
     let startTime = new Date().getTime();
     console.log("makeCategoryTree is running");
@@ -344,3 +414,6 @@ function makeCategoryTree(res) {
 }
 
 module.exports = app;
+
+
+// KIMJINWAN IS BYUNGSHIN! FACT

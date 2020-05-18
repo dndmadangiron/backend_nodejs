@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Product">
 
+  <!-- 카테고리 전체 출력-->
   <select id="get_cate_all">
     SELECT cate_id
          , cate_bg , cate_md, cate_sm
@@ -12,6 +13,7 @@
     ORDER BY cate_bg, cate_md, cate_sm
   </select>
 
+  <!-- 카테고리 대분류 -->
   <select id="get_cate_bg">
     SELECT cate_id
          , cate_bg , cate_md, cate_sm
@@ -27,6 +29,7 @@
     ORDER BY cate_bg, cate_md, cate_sm
   </select>
 
+  <!-- 카테고리 중분류 -->
   <select id="get_cate_md">
     SELECT cate_id
          , cate_bg , cate_md, cate_sm
@@ -45,6 +48,7 @@
     ORDER BY cate_bg, cate_md, cate_sm
   </select>
 
+  <!-- 카테고리 소분류 -->
   <select id="get_cate_sm">
     SELECT cate_id
          , cate_bg
@@ -68,6 +72,7 @@
     ORDER BY cate_bg, cate_md, cate_sm
   </select>
 
+  <!-- 상품이름 조회SQL -->
   <sql id="select_prd_name">
     SELECT MCH.mch_prd_id
           , MCH.mch_prd_cate
@@ -82,6 +87,7 @@
       </if>
   </sql>
 
+  <!-- 상품이름 조회 -->
   <select id="search_prd_name">
      <include refid="select_prd_name" />
         ORDER BY MCH.mch_prd_id DESC
@@ -90,16 +96,34 @@
         </if>
   </select>
 
+  <!-- 상품이름 개수 조회 -->
   <select id="search_cnt_prd_name">
     SELECT COUNT(*) AS total FROM (
       <include refid="select_prd_name" />
     ) AS TBL
   </select>
 
-  <insert id="insert_user">
-    INSERT INTO madangiron.USER_INFO 
-        (user_id, user_pw, user_name, user_nickname) VALUES 
-        (#{user_id}, #{user_pw}, #{user_name}, #{user_nickname})        
-  </insert>
+  <!-- 1주일, 30일 랭킹 -->
+  SELECT TBL.mch_prd_id
+	 , TBL.mch_prd_name
+	 , TBL.price
+	 , TBL.cnt
+	 , @RANK_NUM:=@RANK_NUM+1 AS rank_num
+  FROM 
+(
+	SELECT spm.mch_prd_id
+		 , list.mch_prd_name
+		 , floor(avg(spm.sel_fin_price)) as price
+		 , count(*) AS cnt
+	  FROM SEL_PROD_MTC spm
+	  JOIN MCH_PRD_LIST list
+	    ON spm.mch_prd_id=list.mch_prd_id
+	 WHERE spm.mch_req_date <![CDATA[ > ]]> (SELECT ADDDATE(NOW(), INTERVAL ${period} DAY))
+	   AND spm.mch_req_date <= NOW()
+	 GROUP BY spm.mch_prd_id
+	 ORDER BY cnt DESC, price DESC
+) TBL,
+(SELECT @RANK_NUM:=0) AS RANK_TBL
+WHERE @RANK_NUM+1 <= 10
 
 </mapper>

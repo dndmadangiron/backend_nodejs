@@ -44,7 +44,6 @@ class ValidationUtils {
     
         for (var i=0; i<keyArr.length; i++) {
             try {
-                debugger;
                 if (params[keyArr[i]] == null || params[keyArr[i]] == "")
                 {
                     logger.error(preFix + "parameter is Empty key:["+keyArr[i]+"]");

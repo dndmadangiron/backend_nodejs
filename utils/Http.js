@@ -113,6 +113,7 @@ let HttpApi =
     SEARCH_PRD: {
         reqJson : {
             "prd_name": "",
+            
             //prd_id 옵션
             //page 페이지
             //size 페이지 사이즈

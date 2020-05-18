@@ -60,7 +60,7 @@ app.get('/users/:user_id', function(req, res) {
         } catch (error) {
             //에러로그 작성
             resJson.code = "503";
-            logger.error(err);
+            logger.error(error);
             resJson.result.user_check = false;
             res.send(resJson);
             return;
@@ -156,6 +156,7 @@ app.post('/register', function(req, res) {
         });
     } catch (error) {
         resJson.code = "503";
+        logger.error(err);
         resJson.result.isRegister = false;
         res.send(resJson);
         return;
