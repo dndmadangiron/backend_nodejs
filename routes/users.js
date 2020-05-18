@@ -47,10 +47,10 @@ app.get('/users/:user_id', function(req, res) {
                 res.send(resJson);
                 return;
             } else {
-                resJson.code = "503";
+                resJson.code = "500";
                 if (err) {
                     //에러로그 작성
-                    resJson.code = "503";
+                    resJson.code = "500";
                     logger.error(err);
                 }            
                 resJson.user_check = false;
@@ -100,10 +100,10 @@ app.get('/users/nickname/:nickname', function(req, res) {
                 res.send(resJson);
                 return;
             } else {
-                resJson.code = "503";
+                resJson.code = "500";
                 if (err) {
                     //에러로그 작성
-                    resJson.code = "503";
+                    resJson.code = "500";
                     logger.error(err);
                 }            
                 resJson.result.nickname_check = false;
