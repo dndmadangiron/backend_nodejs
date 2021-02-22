@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=cylinder&color=gradient&height=150&section=header&text=장%20:%20마당 프로젝트&fontSize=40)
+![header](https://capsule-render.vercel.app/api?type=cylinder&color=gradient&height=150&section=header&text=장%20:%20마당&fontSize=40)
 
 ### 📅 When?
 > 2019.12.28 ~ 2020.03.07 : DND 2기 (장 : 마당 프로젝트)
