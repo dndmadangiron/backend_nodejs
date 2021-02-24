@@ -1,29 +1,28 @@
 run_cmd(){
-    cmd=$1
-    echo ${cmd}
-    OUTPUT="$(${cmd})"
+    echo ${$1}
+    OUTPUT="$($1)"
     echo "${OUTPUT}"
 }
 
 # 0. timezone setting(Asia/Seoul)
-sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+if (($EUID != 0)); then # not root
+    sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+else 
+    ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+fi
 
 # 1. move to project directory
-move_to_prj="cd /node-app/server"
-run_cmd ${move_to_prj}
+run_cmd "cd /node-app/server"
 
 # 2. git pull
-git_pull="git pull"
-run_cmd ${git_pull}
+run_cmd "git pull"
 
 # 3. npm install (install project dependency)i
-npm_install="npm install"
-run_cmd ${npm_install}
+run_cmd "npm install"
 
 # 4. restart pm2 (app)
-pm2_kill="pm2 kill"
-run_cmd ${pm2_kill}
+run_cmd "pm2 kill"
 
-APP_START="pm2 start --name=\"app\" app.js --watch --ignore-watch=\"logs/*\""
-run_cmd ${APP_START}
+# 5. start node app (app)
+run_cmd "pm2 start --name=\"app\" app.js --watch --ignore-watch=\"/node-app/server/logs/*\""
 
