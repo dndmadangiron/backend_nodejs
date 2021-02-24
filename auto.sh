@@ -1,5 +1,5 @@
 run_cmd(){
-    echo ${$1}
+    echo $1
     OUTPUT="$($1)"
     echo "${OUTPUT}"
 }
