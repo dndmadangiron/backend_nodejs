@@ -68,7 +68,7 @@
 
 //서버 로직에러
 {
-  "code":"503",
+  "code":"502",
   "result": {
 		"isRegister":false
 	}
@@ -106,7 +106,7 @@ http://API서버주소/users/jinan159
 
 //서버 로직에러(사용불가)
 {
-  "code":"503",
+  "code":"502",
   "result": {
 	  "user_check": false
 	}
@@ -145,7 +145,7 @@ http://API서버주소/users/nickname/jinanNickName
 
 //서버 로직에러(사용불가)
 {
-  "code":"503",
+  "code":"502",
   "result": {
 	  "nickname_check": false
 	}
@@ -191,7 +191,7 @@ http://API서버주소/users/nickname/jinanNickName
 
 //서버 로직에러
 {
-  "code":"503",
+  "code":"502",
   "result": {
 	  "isLoggedIn": false
 	}
@@ -252,7 +252,7 @@ http://API서버주소/category/all
 
 //서버 로직에러
 {
-  "code":"503",
+  "code":"502",
   "result": {
 	  "category": {}
 	}
@@ -304,7 +304,7 @@ http://API서버주소/category/bg
 
 //서버 로직에러
 {
-  "code":"503",
+  "code":"502",
   "result": {
 	  "category": {}
 	}
@@ -361,7 +361,7 @@ http://api.madangiron.kro.kr/category/md?cate_bg=01&cate_md=01
 
 //서버 로직에러
 {
-  "code":"503",
+  "code":"502",
   "result": {
 	  "category": {}
 	}
@@ -419,7 +419,7 @@ http://api.madangiron.kro.kr/category/md?cate_bg=01&cate_md=01 &cate_sm=01
 
 //서버 로직에러
 {
-  "code":"503",
+  "code":"502",
   "result": {
 	  "category": {}
 	}
@@ -481,7 +481,7 @@ http://api.madangiron.kro.kr/search/prdName?prd_name=아이폰XS&page=1&size=2
 
 //서버 로직에러
 {
-  "code": "503",
+  "code": "502",
   "result": {
     "total": "",
     "products": {}

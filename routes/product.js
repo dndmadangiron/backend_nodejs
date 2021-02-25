@@ -23,7 +23,7 @@ app.get('/category/all', function(req, res) {
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.query, HttpApi.CATE_ALL) == false) {
-        resJson.code = "403";
+        resJson.code = HttpApi.HTTP_CODE.INVALID_REQUEST;
         resJson.result.user_check = false;
         res.send(resJson);
         return;
@@ -36,12 +36,12 @@ app.get('/category/all', function(req, res) {
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 res.send(resJson);
                 return;
             }
             else if (result.length > 0){
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.category = makeCategoryTree(result);
                 // resJson.result.category = result
                 
@@ -49,10 +49,10 @@ app.get('/category/all', function(req, res) {
                 res.send(resJson);
                 return;
             } else {
-                resJson.code = "503";
+                resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
                 if (err) {
                     //에러로그 작성
-                    resJson.code = "503";
+                    resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
                     logger.error(err);
                 }            
                 res.send(resJson);
@@ -60,7 +60,7 @@ app.get('/category/all', function(req, res) {
             }
         } catch (err) {
             //에러로그 작성
-            resJson.code = "503";
+            resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
             logger.error(err);
             res.send(resJson);
             return;
@@ -75,7 +75,7 @@ app.get('/category/bg', function(req, res) {
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.query, HttpApi.CATE_BG) == false) {
-        resJson.code = "403";
+        resJson.code = HttpApi.HTTP_CODE.INVALID_REQUEST;
         res.send(resJson);
         return;
     }
@@ -88,17 +88,17 @@ app.get('/category/bg', function(req, res) {
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 res.send(resJson);
                 return;
             }
             else if (result.length > 0){
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.category=result;
                 res.send(resJson);
                 return;
             } else {
-                resJson.code = "503";
+                resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
                 if (err) {
                     //에러로그 작성
                     logger.error(err);
@@ -108,7 +108,7 @@ app.get('/category/bg', function(req, res) {
             }
         } catch (err) {
             //에러로그 작성
-            resJson.code = "503";
+            resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
             logger.error(err);
             res.send(resJson);
             return;
@@ -123,7 +123,7 @@ app.get('/category/md', function(req, res) {
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.query, HttpApi.CATE_MD) == false) {
-        resJson.code = "403";
+        resJson.code = HttpApi.HTTP_CODE.INVALID_REQUEST;
         res.send(resJson);
         return;
     }
@@ -137,17 +137,17 @@ app.get('/category/md', function(req, res) {
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 res.send(resJson);
                 return;
             }
             else if (result.length > 0){
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.category=result;
                 res.send(resJson);
                 return;
             } else {
-                resJson.code = "503";
+                resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
                 if (err) {
                     //에러로그 작성
                     logger.error(err);
@@ -157,7 +157,7 @@ app.get('/category/md', function(req, res) {
             }
         } catch (err) {
             //에러로그 작성
-            resJson.code = "503";
+            resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
             logger.error(err);
             res.send(resJson);
             return;
@@ -172,7 +172,7 @@ app.get('/category/sm', function(req, res) {
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.query, HttpApi.CATE_SM) == false) {
-        resJson.code = "403";
+        resJson.code = HttpApi.HTTP_CODE.INVALID_REQUEST;
         res.send(resJson);
         return;
     }
@@ -185,17 +185,17 @@ app.get('/category/sm', function(req, res) {
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 res.send(resJson);
                 return;
             }
             else if (result.length > 0){
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.category=result;
                 res.send(resJson);
                 return;
             } else {
-                resJson.code = "503";
+                resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
                 if (err) {
                     //에러로그 작성
                     logger.error(err);
@@ -205,7 +205,7 @@ app.get('/category/sm', function(req, res) {
             }
         } catch (err) {
             //에러로그 작성
-            resJson.code = "503";
+            resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
             logger.error(err);
             res.send(resJson);
             return;
@@ -221,7 +221,7 @@ app.get('/search/prdName', function(req, res) {
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.query, HttpApi.SEARCH_PRD) == false) {
-        resJson.code = "403";
+        resJson.code = HttpApi.HTTP_CODE.INVALID_REQUEST;
         res.send(resJson);
         return;
     }
@@ -252,17 +252,17 @@ app.get('/search/prdName', function(req, res) {
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 res.send(resJson);
                 return;
             }
             else if (result.length > 0){
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.products=result;
                 res.send(resJson);
                 return;
             } else {
-                resJson.code = "503";
+                resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
                 if (err) {
                     //에러로그 작성
                     logger.error(err);
@@ -272,7 +272,7 @@ app.get('/search/prdName', function(req, res) {
             }
         } catch (err) {
             //에러로그 작성
-            resJson.code = "503";
+            resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
             logger.error(err);
             res.send(resJson);
             return;
@@ -287,7 +287,7 @@ app.get('/search/rank', function(req, res) {
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.query, HttpApi.SEARCH_PRD) == false) {
-        resJson.code = "403";
+        resJson.code = HttpApi.HTTP_CODE.INVALID_REQUEST;
         res.send(resJson);
         return;
     }
@@ -318,17 +318,17 @@ app.get('/search/rank', function(req, res) {
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 res.send(resJson);
                 return;
             }
             else if (result.length > 0){
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.products=result;
                 res.send(resJson);
                 return;
             } else {
-                resJson.code = "503";
+                resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
                 if (err) {
                     //에러로그 작성
                     logger.error(err);
@@ -338,7 +338,7 @@ app.get('/search/rank', function(req, res) {
             }
         } catch (err) {
             //에러로그 작성
-            resJson.code = "503";
+            resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
             logger.error(err);
             res.send(resJson);
             return;

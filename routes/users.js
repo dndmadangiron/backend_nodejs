@@ -22,7 +22,7 @@ app.get('/users/:user_id', function(req, res) {
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.params, HttpApi.USER_CHECK) == false) {
-        resJson.code = "403";
+        resJson.code = HttpApi.HTTP_CODE.INVALID_REQUEST;
         resJson.result.user_check = false;
         res.send(resJson);
         return;
@@ -59,7 +59,7 @@ app.get('/users/:user_id', function(req, res) {
             }
         } catch (error) {
             //에러로그 작성
-            resJson.code = "503";
+            resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
             logger.error(error);
             resJson.result.user_check = false;
             res.send(resJson);
@@ -75,7 +75,7 @@ app.get('/users/nickname/:nickname', function(req, res) {
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.params, HttpApi.NICKNAME_CHECK) == false) {
-        resJson.code = "403";
+        resJson.code = HttpApi.HTTP_CODE.INVALID_REQUEST;
         resJson.result.nickname_check = false;
         res.send(resJson);
         return;
@@ -112,7 +112,7 @@ app.get('/users/nickname/:nickname', function(req, res) {
             }
         } catch (error) {
             //에러로그 작성
-            resJson.code = "503";
+            resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
             logger.error(err);
             resJson.result.nickname_check = false;
             res.send(resJson);
@@ -129,7 +129,7 @@ app.post('/register', function(req, res) {
 
     //api명세의 request에서 넘어와야 하는 request Json을 지정해준다.
     if (Validation.isRequestValid(req.body, HttpApi.REGISTER) == false) {
-        resJson.code = "403";
+        resJson.code = HttpApi.HTTP_CODE.INVALID_REQUEST;
         resJson.result.isRegister = false;
         res.send(resJson);
         return;
@@ -143,7 +143,7 @@ app.post('/register', function(req, res) {
 
         dbconn.query(query, function(err, result, fields) {
             if (err) {
-                resJson.code = "403";
+                resJson.code = HttpApi.HTTP_CODE.INVALID_REQUEST;
                 resJson.result.isRegister = false;
                 res.send(resJson);
                 return;
@@ -155,7 +155,7 @@ app.post('/register', function(req, res) {
             }
         });
     } catch (error) {
-        resJson.code = "503";
+        resJson.code = HttpApi.HTTP_CODE.SERVER_ERROR;
         logger.error(err);
         resJson.result.isRegister = false;
         res.send(resJson);
