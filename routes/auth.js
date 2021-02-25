@@ -43,7 +43,7 @@ app.post('/auth/login', function (req, res) {
                 resJson.result.isLoggedIn = false;                
             } else {
                 let token = jwtUtils.createJwtToken(payload);
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.isLoggedIn = true;
                 // response의 header에 jwt토큰 세팅
                 res.set("token", token);

@@ -36,13 +36,13 @@ app.get('/users/:user_id', function(req, res) {
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.user_check = true;
                 res.send(resJson);
                 return;
             }
             else if (result.length == 1){
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.user_check = false;
                 res.send(resJson);
                 return;
@@ -89,13 +89,13 @@ app.get('/users/nickname/:nickname', function(req, res) {
     dbconn.query(query, function(err, result, fields) {
         try {
             if (result.length == 0){//결과 없음
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.nickname_check = true;
                 res.send(resJson);
                 return;
             }
             else if (result.length == 1){
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.nickname_check = false;
                 res.send(resJson);
                 return;
@@ -148,7 +148,7 @@ app.post('/register', function(req, res) {
                 res.send(resJson);
                 return;
             } else {
-                resJson.code = "200";
+                resJson.code = HttpApi.HTTP_CODE.SUCCESS;
                 resJson.result.isRegister = true;
                 res.send(resJson);
                 return;
