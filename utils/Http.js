@@ -1,5 +1,16 @@
 let HttpApi = 
 {
+    /**[START] HTTP CODE **/
+    HTTP_CODE: {
+        SUCCESS: '200',
+    
+        INVALID_REQUEST: '403',
+
+        SERVER_ERROR: '502',
+    },
+    /**[END] HTTP CODE**/
+
+    /**[START] API area **/
     // GET /users/:user_id
     USER_CHECK: {
         reqJson: 
@@ -125,9 +136,8 @@ let HttpApi =
                 "products": {}
 			}
         }
-    },
-
-
+    }
+    /**[END] API area **/
 }
 
 module.exports = HttpApi;
